@@ -1,6 +1,6 @@
-(require 'clojure.java.io)
+(require '[clojure.java.io :as io])
 
-(defn reader [file] (clojure.java.io/reader (str (.getParent (clojure.java.io/file *file*)) "/" file)))
+(defn reader [file] (io/reader (str (.getParent (io/file *file*)) "/" file)))
 
 
 (with-open
@@ -8,9 +8,9 @@
   (->>
    (line-seq r)
    (reduce
-    (fn [x y]
+    (fn [score strategy]
       (+
-       x
+       score
        ({(keyword "A X") (+ 1 3)
          (keyword "A Y") (+ 2 6)
          (keyword "A Z") (+ 3 0)
@@ -20,5 +20,5 @@
          (keyword "C X") (+ 1 6)
          (keyword "C Y") (+ 2 0)
          (keyword "C Z") (+ 3 3)}
-        (keyword y))))
+        (keyword strategy))))
     0)))

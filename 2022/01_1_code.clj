@@ -1,6 +1,6 @@
-(require 'clojure.java.io)
+(require '[clojure.java.io :as io])
 
-(defn reader [file] (clojure.java.io/reader (str (.getParent (clojure.java.io/file *file*)) "/" file)))
+(defn reader [file] (io/reader (str (.getParent (io/file *file*)) "/" file)))
 
 
 (with-open

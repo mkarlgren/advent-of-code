@@ -1,6 +1,6 @@
-(require 'clojure.string 'clojure.java.io)
+(require '[clojure.java.io :as io])
 
-(defn reader [file] (clojure.java.io/reader (str (.getParent (clojure.java.io/file *file*)) "/" file)))
+(defn reader [file] (io/reader (str (.getParent (io/file *file*)) "/" file)))
 
 
 (with-open
@@ -8,12 +8,12 @@
   (->>
    (line-seq r)
    (reduce
-    (fn [curr-max cal-string]
+    (fn [elves-cals cal-string]
       (if (= "" cal-string)
-        (conj curr-max 0)
+        (conj elves-cals 0)
         (cons
-         (+ (first curr-max) (Long/parseLong cal-string))
-         (rest curr-max))))
+         (+ (first elves-cals) (Long/parseLong cal-string))
+         (rest elves-cals))))
     '(0))
    (sort >)
    (take 3)
